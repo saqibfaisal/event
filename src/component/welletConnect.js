@@ -28,31 +28,33 @@ function WellectConnect(props) {
             // Do something
             window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then(res => {
+                    console.log(res);
                     // Return the address of the wallet
                     // setDefaultAccount(res)
-                    accountChangedHnadler(res[0]);
+                    // accountChangedHnadler(res[0]);
                 })
         } else {
-            setErrorMessage('Install MetaMask')
+            // setErrorMessage('Install MetaMask')
+            console.log("install metamask");
         }
-        let accountChangedHnadler = (newAccount) => {
-            setDefaultAccount(newAccount)
-            getUserBalance(newAccount);
-        }
-        let getUserBalance = (address) => {
-            window.ethereum.request({
-                method: 'eth_getBalance',
-                params: [address, 'latest']
-            }).then(balance => {
-                // Return string value to convert it into int balance
-                setUserBalance(ethers.utils.formatEther(balance))
+        // let accountChangedHnadler = (newAccount) => {
+        //     setDefaultAccount(newAccount)
+        //     getUserBalance(newAccount);
+        // }
+        // let getUserBalance = (address) => {
+        //     window.ethereum.request({
+        //         method: 'eth_getBalance',
+        //         params: [address, 'latest']
+        //     }).then(balance => {
+        //         // Return string value to convert it into int balance
+        //         setUserBalance(ethers.utils.formatEther(balance))
 
-                //   // Yarn add ethers for using ethers utils or
-                //   // npm install ethers
-                //   console.log(ethers.utils.formatEther(balance))
-                //   // Format the string into main latest balance
-            })
-        }
+        //         //   // Yarn add ethers for using ethers utils or
+        //         //   // npm install ethers
+        //         //   console.log(ethers.utils.formatEther(balance))
+        //         //   // Format the string into main latest balance
+        //     })
+        // }
     }
     let {open,handleClose } = props
     return (
