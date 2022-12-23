@@ -9,15 +9,25 @@ import Singers2 from "./assets/singer3.jpg"
 import Singers3 from "./assets/singer4.jpg"
 import Singers4 from "./assets/singer5.jpg"
 import Singers5 from "./assets/singer7.jpg"
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import WellectConnect from "../component/welletConnect"
+
+
 function Home() {
+    const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
     let navigate = useNavigate()
-    let meta =()=>{
-        navigate("/Wellet")
+    let meta = () => {
+        console.log("sfsdf")
+        handleOpen()
+        // navigate("/Wellet")
     }
     return (
         <>
             <Navbar />
+            <WellectConnect open={open} handleClose={handleClose}/>
             <div className="hero">
                 <div className="hero-description">
 
@@ -27,7 +37,7 @@ function Home() {
                         </h1>
                         <p>Saturday Dec 31</p>
                         <p><i className="fa fa-map-marker fa-fw w3-text-white w3-xlarge w3-margin-bottom w3-margin-right"></i> loacation : Bahria Town</p>
-                        <p onClick={()=>meta()} className="w3-btn w3-red w3-margin-top w3-round" style={{ width: "40%" }}>
+                        <p onClick={() => meta()} className="w3-btn w3-red w3-margin-top w3-round" style={{ width: "40%" }}>
                             Buy Ticket
                         </p>
                     </div>
@@ -112,7 +122,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-                <Ticket/>
+            <Ticket />
         </>
     )
 }
