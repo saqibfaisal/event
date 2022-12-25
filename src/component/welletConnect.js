@@ -14,7 +14,7 @@ const style = {
     // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    color:"black",
+    color: "black",
 };
 function WellectConnect(props) {
     let [errorMessage, setErrorMessage] = useState(null);
@@ -30,48 +30,50 @@ function WellectConnect(props) {
                 .then(res => {
                     console.log(res);
                     // Return the address of the wallet
-                    // setDefaultAccount(res)
-                    // accountChangedHnadler(res[0]);
+                    setDefaultAccount(res)
+                    accountChangedHnadler(res[0]);
                 })
         } else {
             // setErrorMessage('Install MetaMask')
             console.log("install metamask");
         }
-        // let accountChangedHnadler = (newAccount) => {
-        //     setDefaultAccount(newAccount)
-        //     getUserBalance(newAccount);
-        // }
-        // let getUserBalance = (address) => {
-        //     window.ethereum.request({
-        //         method: 'eth_getBalance',
-        //         params: [address, 'latest']
-        //     }).then(balance => {
-        //         // Return string value to convert it into int balance
-        //         setUserBalance(ethers.utils.formatEther(balance))
+        let accountChangedHnadler = (newAccount) => {
+            setDefaultAccount(newAccount)
+            getUserBalance(newAccount);
+        }
+        let getUserBalance = (address) => {
+            window.ethereum.request({
+                method: 'eth_getBalance',
+                params: [address, 'latest']
+            }).then(balance => {
+                // Return string value to convert it into int balance
+                setUserBalance(ethers.utils.formatEther(balance))
+                // setUserBalance(balance)
 
-        //         //   // Yarn add ethers for using ethers utils or
-        //         //   // npm install ethers
-        //         //   console.log(ethers.utils.formatEther(balance))
-        //         //   // Format the string into main latest balance
-        //     })
-        // }
+                //   // Yarn add ethers for using ethers utils or
+                //   // npm install ethers
+                //   console.log(ethers.utils.formatEther(balance))
+                //   // Format the string into main latest balance
+            })
+        }
     }
-    let {open,handleClose } = props
+    let { open, handleClose } = props
     return (
         <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            aria-describedby="modal-modal-description"  
+            sx={{width:"100%" ,paddingTop:"10px", paddingBottom:"10px"}}
         >
             <Box sx={style}>
                 <Button variant="contained" onClick={() => connectWalletHandler()} Container>{connButtonText}</Button>
-                {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
+                <Typography id="modal-modal-title"  component="h6" >
+                    Address: {defaultAccount}
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography> */}
+                <Typography id="modal-modal-description" >
+                    Balance: {userBalance}
+                </Typography>
             </Box>
         </Modal>
     )

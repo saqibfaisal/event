@@ -247,6 +247,10 @@
       border:1px solid ;
       width:60%;
   }
+  .metamaskBtn:hover{
+    background-color: #F44336 !important;
+    color: #ffffcc !important;
+  }
   /*MEDIA QUERIES*/
   /*Large screens - Desktop*/
   
