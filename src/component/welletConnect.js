@@ -21,7 +21,6 @@ function WellectConnect(props) {
     let [defaultAccount, setDefaultAccount] = useState(null);
     let [userBalance, setUserBalance] = useState(null);
     let [connButtonText, setConnButtonText] = useState('Connect MetaMask');
-
     let connectWalletHandler = () => {
         // console.log("jksdghjf");
         if (window.ethereum) {
@@ -32,6 +31,9 @@ function WellectConnect(props) {
                     // Return the address of the wallet
                     setDefaultAccount(res)
                     accountChangedHnadler(res[0]);
+                
+                    window.localStorage.setItem("UserAddress",res[0])
+                    // debugger
                 })
         } else {
             // setErrorMessage('Install MetaMask')

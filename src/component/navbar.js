@@ -5,32 +5,35 @@ import Images from "../loader.gif"
 import * as React from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from "react-router-dom";
 function Navbar() {
+    let navigate = useNavigate()
     let [isLoading, SetIsLoading] = useState(false)
     let [errorMessage, setErrorMessage] = useState();
     let meta = () => {
-        console.log("jksfjs");
-        SetIsLoading(true)
-        if (window.ethereum) {
-            // Do something
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(res => {
-                    SetIsLoading(false)
-                    console.log(res);
-                    setErrorMessage(null)
-                    // Return the address of the wallet
-                    // setDefaultAccount(res)
-                    // accountChangedHnadler(res[0]);
-                    // {
+        navigate("/hello")
+    //     console.log("jksfjs");
+    //     SetIsLoading(true)
+    //     if (window.ethereum) {
+    //         // Do something
+    //         window.ethereum.request({ method: 'eth_requestAccounts' })
+    //             .then(res => {
+    //                 SetIsLoading(false)
+    //                 console.log(res);
+    //                 setErrorMessage(null)
+    //                 // Return the address of the wallet
+    //                 // setDefaultAccount(res)
+    //                 // accountChangedHnadler(res[0]);
+    //                 // {
 
-                    //     
-                    // }
-                })
-        } else {
-            setErrorMessage('Install MetaMask')
-            SetIsLoading(false)
-            console.log("install metamask");
-        }
+    //                 //     
+    //                 // }
+    //             })
+    //     } else {
+    //         setErrorMessage('Install MetaMask')
+    //         SetIsLoading(false)
+    //         console.log("install metamask");
+    //     }
     }
     return (
         <div>
