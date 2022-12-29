@@ -1,6 +1,6 @@
 import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -23,9 +23,7 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import Logout from "@mui/icons-material/Logout";
-import { Menu, MenuItem } from "@mui/material";
-// import { Signout } from "../config/firebasemethod";
-// import { MenuItem } from '@mui/material/MenuItem';
+import { Button, Menu, MenuItem } from "@mui/material";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -117,15 +115,7 @@ function Dashboard(props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    //   const navigate = useNavigate();
-    //   const Log =()=>{
-    //     Signout()
-    //     .then(()=>{
-    //       navigate("/adminlogin")
-    //     }).catch((err)=>{console.log(err);})
-    //   }
-
+    let Navigate = useNavigate()
     return (
         <div>
             <Box sx={{ display: "flex", flexGrow: 1 }}>
@@ -189,6 +179,9 @@ function Dashboard(props) {
                                             </ListItemIcon >
                                             Logout
                                         </MenuItem>
+                                        {/* <MenuItem> */}
+                                            <Button sx={{color:"black" ,backgroundColor:"black"}}>Connect Metamask</Button>
+                                        {/* </MenuItem> */}
                                     </Menu>
                                 </div>
                             )}
@@ -211,7 +204,7 @@ function Dashboard(props) {
                             </IconButton>
                         </DrawerHeader>
                         <List>
-                            <ListItem
+                            {/* <ListItem
                                 className="sideBtns"
                                 // onClick={() => {
                                 //   navigate("/admincourse");
@@ -242,9 +235,6 @@ function Dashboard(props) {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem
-                                // onClick={() => {
-                                //   navigate("/admincoursedetail");
-                                // }}
                                 disablePadding
                                 className="sideBtns"
                                 sx={{ display: "block" }}
@@ -270,11 +260,11 @@ function Dashboard(props) {
                                         sx={{ opacity: open ? 1 : 0 }}
                                     />
                                 </ListItemButton>
-                            </ListItem>
+                            </ListItem> */}
                             <ListItem
-                                // onClick={() => {
-                                //   navigate("/adminquiz");
-                                // }}
+                                onClick={() => {
+                                    Navigate("/eventCreate");
+                                }}
                                 disablePadding
                                 className="sideBtns"
                                 sx={{ display: "block" }}
@@ -295,13 +285,10 @@ function Dashboard(props) {
                                     >
                                         <QuizIcon color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Quiz" sx={{ opacity: open ? 1 : 0 }} />
+                                    <ListItemText primary="Create" sx={{ opacity: open ? 1 : 0 }} />
                                 </ListItemButton>
                             </ListItem>
-                            <ListItem
-                                // onClick={() => {
-                                //   navigate("/adminregisuser");
-                                // }}
+                            {/* <ListItem
                                 disablePadding
                                 className="sideBtns"
                                 sx={{ display: "block" }}
@@ -329,9 +316,6 @@ function Dashboard(props) {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem
-                                // onClick={() => {
-                                //   navigate("/createresult");
-                                // }}
                                 disablePadding
                                 className="sideBtns"
                                 sx={{ display: "block" }}
@@ -359,9 +343,6 @@ function Dashboard(props) {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem
-                                // onClick={() => {
-                                //   navigate("/country");
-                                // }}
                                 disablePadding
                                 className="sideBtns"
                                 sx={{ display: "block" }}
@@ -389,9 +370,6 @@ function Dashboard(props) {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem
-                                // onClick={() => {
-                                //   navigate("/city");
-                                // }}
                                 disablePadding
                                 className="sideBtns"
                                 sx={{ display: "block" }}
@@ -414,7 +392,7 @@ function Dashboard(props) {
                                     </ListItemIcon>
                                     <ListItemText primary="City" sx={{ opacity: open ? 1 : 0 }} />
                                 </ListItemButton>
-                            </ListItem>
+                            </ListItem> */}
                             {/* <Divider sx={{ backgroundColor: "#0277bd" }} /> */}
                             {/* <ListItem
                 onClick={() => {

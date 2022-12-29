@@ -4,9 +4,10 @@ import Web3 from "web3"
 import { ABI } from "../config/abi"
 import { ethers } from "ethers"
 function Ticket() {
-    let [event, setEvent] = useState("")
-    let [quantity, setQuantity] = useState("")
+    let [event, setEvent] = useState()
+    let [quantity, setQuantity] = useState()
     async function Submit() {
+        // console.log(event,quantity)
         if (window.ethereum) {
             // event.preventDefault()
             const web3 = new Web3(window.ethereum)

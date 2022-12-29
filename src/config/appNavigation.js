@@ -11,13 +11,9 @@ function AppNavigation() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Admin />} />
-        <Route path="/EventCreate" element={<EventCreate />} />
-        {/* <Route path="/" element={<Home />} />
-        <Route path="/hello" element={<HelloWorld />} /> */}
-        {/* <Route path="/Wellet" element={<WellectConnect />} /> */}
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/Admin" element={<Admin />} />
+        <Route path="/eventCreate" element={<EventCreate />} />
       </Routes>
     </Router>
   );
