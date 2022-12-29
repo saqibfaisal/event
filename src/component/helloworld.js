@@ -1,31 +1,32 @@
 import React, { useState } from "react";
-import { connectWallet } from "../util/interact"
+// import { connectWallet } from "../util/interact"
+import  Web3 from "web3"
 const HelloWorld = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
     const [message, setMessage] = useState("No connection to the network."); //default message
     const [newMessage, setNewMessage] = useState("");
-    const connectWalletPressed = async () => {
-        const walletResponse = await connectWallet();
-        setStatus(walletResponse.status);
-        setWallet(walletResponse.address);
-    };
-    return (
-        <div id="container">
-            {/* <img id="logo" src={alchemylogo}></img> */}
-            <button id="walletButton" onClick={connectWalletPressed}>
-                {walletAddress.length > 0 ? (
-                    "Connected: " +
-                    String(walletAddress).substring(0, 6) +
-                    "..." +
-                    String(walletAddress).substring(38)
-                ) : (
-                    <span>Connect Wallet</span>
-                )}
-            </button>
+    // const connectWalletPressed = async () => {
+        // const walletResponse = await ;
+        // setStatus(walletResponse.status);
+        // setWallet(walletResponse.address);
+    // };
 
-            <h2 style={{ paddingTop: "50px" }}>Current Message:</h2>
-            <p>{message}</p>
+    return (
+        // <div id="container">
+        //     <button id="walletButton" onClick={connectWalletPressed}>
+        //         {walletAddress.length > 0 ? (
+        //             "Connected: " +
+        //             String(walletAddress).substring(0, 6) +
+        //             "..." +
+        //             String(walletAddress).substring(38)
+        //         ) : (
+        //             <span>Connect Wallet</span>
+        //         )}
+        //     </button>
+
+        //     <h2 style={{ paddingTop: "50px" }}>Current Message:</h2>
+        //     <p>{message}</p>
 
             {/* <h2 style={{ paddingTop: "18px" }}>New Message:</h2>
 
@@ -42,7 +43,7 @@ const HelloWorld = () => {
                     Update
                 </button>
             </div> */}
-        </div>
+        // </div>
     )
 }
 export default HelloWorld

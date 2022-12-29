@@ -11,29 +11,22 @@ function Navbar() {
     let [isLoading, SetIsLoading] = useState(false)
     let [errorMessage, setErrorMessage] = useState();
     let meta = () => {
-        navigate("/hello")
-    //     console.log("jksfjs");
-    //     SetIsLoading(true)
-    //     if (window.ethereum) {
-    //         // Do something
-    //         window.ethereum.request({ method: 'eth_requestAccounts' })
-    //             .then(res => {
-    //                 SetIsLoading(false)
-    //                 console.log(res);
-    //                 setErrorMessage(null)
-    //                 // Return the address of the wallet
-    //                 // setDefaultAccount(res)
-    //                 // accountChangedHnadler(res[0]);
-    //                 // {
+    if (window.ethereum) {
+        // Do something
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+            .then(res => {
+                console.log(res);
+                // Return the address of the wallet
+                // setDefaultAccount(res[0])
+                // accountChangedHnadler(res[0]);
 
-    //                 //     
-    //                 // }
-    //             })
-    //     } else {
-    //         setErrorMessage('Install MetaMask')
-    //         SetIsLoading(false)
-    //         console.log("install metamask");
-    //     }
+                localStorage.setItem("UserAddress", res[0])
+                // debugger
+            })
+    } else {
+        // setErrorMessage('Install MetaMask')
+        console.log("install metamask");
+    }
     }
     return (
         <div>

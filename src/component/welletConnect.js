@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ethers } from "ethers";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Web3 from "web3";
+import { ABI } from "../config/abi";
+import { Address } from "../config/address";
 const style = {
     position: 'absolute',
     top: '50%',
@@ -29,10 +32,10 @@ function WellectConnect(props) {
                 .then(res => {
                     console.log(res);
                     // Return the address of the wallet
-                    setDefaultAccount(res)
+                    setDefaultAccount(res[0])
                     accountChangedHnadler(res[0]);
-                
-                    window.localStorage.setItem("UserAddress",res[0])
+
+                    localStorage.setItem("UserAddress", res[0])
                     // debugger
                 })
         } else {
@@ -50,27 +53,36 @@ function WellectConnect(props) {
             }).then(balance => {
                 // Return string value to convert it into int balance
                 setUserBalance(ethers.utils.formatEther(balance))
-                // setUserBalance(balance)
-
-                //   // Yarn add ethers for using ethers utils or
-                //   // npm install ethers
-                //   console.log(ethers.utils.formatEther(balance))
-                //   // Format the string into main latest balance
             })
         }
     }
-    let { open, handleClose } = props
+    // async function SetA (){
+    //     const web3 = new Web3(window.ethereum)
+    //     let contract = new web3.eth.Contract(ABI,Address)
+    //   let response = await contract.methods.SetA(10).send({from:"0x2F7CCa57C46a0B23A71a3E39883A22d7C6F6C490"})
+    //   console.log(response)
+    // }
+    async function Click (){
+        const web3 = new Web3(window.ethereum)
+        let contract = new web3.eth.Contract(ABI,localStorage.getItem("UserAddress"))
+      let response = await contract.methods.buyTicket(0,10).call()
+      console.log(response)
+    }
+        let { open, handleClose } = props
     return (
         <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"  
-            sx={{width:"100%" ,paddingTop:"10px", paddingBottom:"10px"}}
+            aria-describedby="modal-modal-description"
+            sx={{ width: "100%", paddingTop: "10px", paddingBottom: "10px" }}
         >
             <Box sx={style}>
+            {/* <Button onClick={()=>SetA()}>set</Button> */}
+
+                <Button onClick={()=>Click()}>get</Button>
                 <Button variant="contained" onClick={() => connectWalletHandler()} Container>{connButtonText}</Button>
-                <Typography id="modal-modal-title"  component="h6" >
+                <Typography id="modal-modal-title" component="h6" >
                     Address: {defaultAccount}
                 </Typography>
                 <Typography id="modal-modal-description" >

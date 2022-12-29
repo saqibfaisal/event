@@ -16,8 +16,8 @@ import WellectConnect from "../component/welletConnect"
 
 function Home() {
     const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     let navigate = useNavigate()
     let meta = () => {
         console.log("sfsdf")
@@ -27,7 +27,7 @@ function Home() {
     return (
         <>
             <Navbar />
-            <WellectConnect open={open} handleClose={handleClose}/>
+            <WellectConnect open={open} handleClose={handleClose} />
             <div className="hero">
                 <div className="hero-description">
 
@@ -37,9 +37,9 @@ function Home() {
                         </h1>
                         <p>Saturday Dec 31</p>
                         <p><i className="fa fa-map-marker fa-fw w3-text-white w3-xlarge w3-margin-bottom w3-margin-right"></i> loacation : Bahria Town</p>
-                        <p onClick={() => meta()} className="w3-btn w3-red w3-margin-top w3-round" style={{ width: "40%" }}>
+                        <a href="#book" className="w3-btn w3-red w3-margin-top w3-round" style={{ width: "40%" }}>
                             Buy Ticket
-                        </p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -121,8 +121,10 @@ function Home() {
                         </div>
                     </div>
                 </div>
+
+
+                <Ticket />
             </div>
-            <Ticket />
         </>
     )
 }
