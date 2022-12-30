@@ -65,7 +65,7 @@ function Home() {
 
                 </div>
             </div>
-            <div className="poster">
+            <div id="Singers" className="poster">
 
                 <h2>Singers & musicians</h2>
 

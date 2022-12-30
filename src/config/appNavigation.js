@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import HelloWorld from "../component/helloworld";
 import WellectConnect from "../component/welletConnect";
 import Admin from "../screen/adminScreen/admin";
 import EventCreate from "../screen/adminScreen/eventCreate";
@@ -14,6 +13,7 @@ function AppNavigation() {
         <Route path="/" element={<Home />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/eventCreate" element={<EventCreate />} />
+        <Route path="/wellect" element={<WellectConnect />} />
       </Routes>
     </Router>
   );

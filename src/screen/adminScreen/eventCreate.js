@@ -5,46 +5,42 @@ import { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import Dashboard from '../../component/dashboard';
 import { ABI } from '../../config/abi';
+import { Address } from '../../config/address';
+import { sendData } from "../../config/firbeaseMethod";
 function EventCreate() {
     let [name, setName] = useState("");
     let [date, setDate] = useState();
     let [price, setPrice] = useState();
     let [ticket, setTicket] = useState();
-    let Connect = () => {
+    let [id, setId] = useState();
+    async function Create() {
         if (window.ethereum) {
-            // Do something
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(res => {
-                    console.log(res);
-                    // Return the address of the wallet
-                    // setDefaultAccount(res[0])
-                    // accountChangedHnadler(res[0]);
+            const web3 = new Web3(window.ethereum)
+            await window.ethereum.enable();
+            let contract = new web3.eth.Contract(ABI, Address)
 
-                    localStorage.setItem("AdminAddress", res[0])
-                    // debugger
+            let response = await contract.methods.createEvent(name, date, price, ticket).send({ from:localStorage.getItem("AdminAddress")})
+            console.log(response)
+
+            localStorage.setItem("create", JSON.stringify(response))
+            sendData(response, "Event")
+                .then((success) => {
+                    console.log(success);
                 })
-        } else {
-            // setErrorMessage('Install MetaMask')
-            console.log("install metamask");
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     }
-    // useEffect((
-    //     Connect()
-    // ), [])
-        // let Create = () => {
-        //     // async function Submit() {
-        //     if (window.ethereum) {
-        //         // event.preventDefault()
-        //         const web3 = new Web3(window.ethereum)
-        //         // const signer = provider.getSigner();
-        //         let contract = new web3.eth.Contract(ABI, localStorage.getItem("AdminAddress"))
-        //         // let response = await contract.methods.buyTicket(address, name, date, price, ticket, ticket).call()
-        //         // console.log(response)
-        //         // let response = await contract.methods.buyTicket(0, 10).call()
-        //         // console.log(response)
-        //     }
-        //     // }
-        // }
+    async function Get() {
+        const web3 = new Web3(window.ethereum)
+        await window.ethereum.enable();
+        let contract = new web3.eth.Contract(ABI, Address)
+        // console.log(await contract.methods)
+        let get = await contract.methods.getTicket(id).call()
+        console.log(get);
+    }
+    // }
     return (
         <Box>
             <Dashboard />
@@ -66,11 +62,21 @@ function EventCreate() {
                     <TextField sx={{ margin: "30px", marginTop: "10px" }} fullWidth id="filled-basic" label="Ticket" variant="filled" onChange={(e) => setTicket(e.target.value)} />
                 </Grid>
                 <Grid item md={12}>
-                    <Button variant="contained" 
-                    // onClick={() => Create()}
+                    <Button variant="contained"
+                        onClick={() => Create()}
                     >Create</Button>
                 </Grid>
 
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", marginTop: "20px" }}>
+                <Grid item md={12}>
+                    <TextField sx={{ margin: "30px" }} fullWidth id="filled-basic" label="id" variant="filled" onChange={(e) => setId(e.target.value)} />
+                </Grid>
+                <Grid item md={12}>
+                    <Button variant="contained"
+                        onClick={() => Get()}
+                    >GETSS</Button>
+                </Grid>
             </Box>
         </Box>
     )

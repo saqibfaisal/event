@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import Web3 from "web3";
 import { ABI } from "../config/abi";
 import { Address } from "../config/address";
+import { Grid, TextField } from "@mui/material";
 const style = {
     position: 'absolute',
     top: '50%',
@@ -20,55 +21,11 @@ const style = {
     color: "black",
 };
 function WellectConnect(props) {
-    let [errorMessage, setErrorMessage] = useState(null);
-    let [defaultAccount, setDefaultAccount] = useState(null);
-    let [userBalance, setUserBalance] = useState(null);
-    let [connButtonText, setConnButtonText] = useState('Connect MetaMask');
-    let connectWalletHandler = () => {
-        // console.log("jksdghjf");
-        if (window.ethereum) {
-            // Do something
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(res => {
-                    console.log(res);
-                    // Return the address of the wallet
-                    setDefaultAccount(res[0])
-                    accountChangedHnadler(res[0]);
-
-                    localStorage.setItem("UserAddress", res[0])
-                    // debugger
-                })
-        } else {
-            // setErrorMessage('Install MetaMask')
-            console.log("install metamask");
-        }
-        let accountChangedHnadler = (newAccount) => {
-            setDefaultAccount(newAccount)
-            getUserBalance(newAccount);
-        }
-        let getUserBalance = (address) => {
-            window.ethereum.request({
-                method: 'eth_getBalance',
-                params: [address, 'latest']
-            }).then(balance => {
-                // Return string value to convert it into int balance
-                setUserBalance(ethers.utils.formatEther(balance))
-            })
-        }
-    }
-    // async function SetA (){
-    //     const web3 = new Web3(window.ethereum)
-    //     let contract = new web3.eth.Contract(ABI,Address)
-    //   let response = await contract.methods.SetA(10).send({from:"0x2F7CCa57C46a0B23A71a3E39883A22d7C6F6C490"})
-    //   console.log(response)
-    // }
-    async function Click (){
-        const web3 = new Web3(window.ethereum)
-        let contract = new web3.eth.Contract(ABI,localStorage.getItem("UserAddress"))
-      let response = await contract.methods.buyTicket(0,10).call()
-      console.log(response)
-    }
-        let { open, handleClose } = props
+    let [number,setNumber]= useState()
+    let [quantity,setQuantity]= useState()
+    let [transferAddress,setTransferAddress]= useState()
+    let { open, handleClose } = props
+     
     return (
         <Modal
             open={open}
@@ -78,26 +35,24 @@ function WellectConnect(props) {
             sx={{ width: "100%", paddingTop: "10px", paddingBottom: "10px" }}
         >
             <Box sx={style}>
-            {/* <Button onClick={()=>SetA()}>set</Button> */}
-
-                <Button onClick={()=>Click()}>get</Button>
-                <Button variant="contained" onClick={() => connectWalletHandler()} Container>{connButtonText}</Button>
-                <Typography id="modal-modal-title" component="h6" >
-                    Address: {defaultAccount}
-                </Typography>
-                <Typography id="modal-modal-description" >
-                    Balance: {userBalance}
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                    <Grid item md={12}>
+                        <TextField sx={{ margin: "10px", padding: "5px" }} label="Event No" variant="outlined" onChange={(e)=>setNumber(e.target.value)} />
+                    </Grid>
+                    <Grid item md={12}>
+                        <TextField sx={{ margin: "10px", padding: "5px" }} label="Quantity" variant="outlined" onChange={(e)=>setQuantity(e.target.value)}/>
+                    </Grid>
+                    <Grid item md={12}>
+                        <TextField sx={{ margin: "10px", padding: "5px" }} label="address " variant="outlined" onChange={(e)=>setTransferAddress(e.target.value)}/>
+                    </Grid>
+                    <Grid item md={12}>
+                        <Button sx={{backgroundColor:"#F44336" , color:"white" ,margin:"10px"}} 
+                        // onClick={()=>Transfer()}
+                        >Transfer Ticket</Button>
+                    </Grid>
+                </Box>
             </Box>
         </Modal>
     )
 }
 export default WellectConnect
-// </div >
-    // <div style={{ backgroundColor: "black" }}>
-    //     <h4>Connection to metamask using window.ethereum method</h4>
-    //     <button onClick={() => connectWalletHandler()} style={{ cursor: "pointer" }}></button>
-    //     <h4>address:{defaultAccount}</h4>
-    //     <h4>Balance:{userBalance}</h4>
-    //     <p>{errorMessage}</p>
-    // </div>

@@ -1,35 +1,33 @@
-import Image from "../screen/assets/download.jpg"
 import Button from '@mui/material/Button';
-import { useState } from "react";
-import Images from "../loader.gif"
 import * as React from 'react';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import WellectConnect from './welletConnect';
 function Navbar() {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     let navigate = useNavigate()
-    let [isLoading, SetIsLoading] = useState(false)
-    let [errorMessage, setErrorMessage] = useState();
-    let meta = () => {
-    if (window.ethereum) {
-        // Do something
-        window.ethereum.request({ method: 'eth_requestAccounts' })
-            .then(res => {
-                console.log(res);
-                // Return the address of the wallet
-                // setDefaultAccount(res[0])
-                // accountChangedHnadler(res[0]);
+    let meta = async () => {
+        if (window.ethereum) {
+            // Do something
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+            await window.ethereum.enable()
+                .then(res => {
+                    console.log(res);
 
-                localStorage.setItem("UserAddress", res[0])
-                // debugger
-            })
-    } else {
-        // setErrorMessage('Install MetaMask')
-        console.log("install metamask");
+                    localStorage.setItem("UserAddress", res[0])
+                })
+        } else {
+            console.log("install metamask");
+        }
     }
+    let TansferTicket =  () => {
+        // navigate("/wellect")
+        handleOpen()
     }
     return (
         <div>
+            <WellectConnect open={open} handleClose={handleClose} />
             <header id="home">
                 <div class="w3-top w3-light-gray">
                     <div class="w3-row w3-padding w3-white">
@@ -44,19 +42,22 @@ function Navbar() {
                         </div>
 
                         <div class="w3-col s3" backgroundColor="#F44336">
-                            {isLoading ? <img ClassName="metamaskBtn" src={Images} style={{ width: "50%", height: "20%" }} /> : <Button sx={{ backgroundColor: "#F44336", color: "white", borderRadius: "12px", padding: "9px" }} onClick={() => meta()}>Connect MetaMask</Button>}
+                            {localStorage.getItem("UserAddress") ?
+                                <Button sx={{ backgroundColor: "#F44336", color: "white", borderRadius: "12px", padding: "9px" }} onClick={() => TansferTicket()}>Transfer </Button> :
+                                < Button sx={{ backgroundColor: "#F44336", color: "white", borderRadius: "12px", padding: "9px" }} onClick={() => meta()}>Connect MetaMask</Button>
+                            }
                         </div>
                     </div>
 
                 </div>
-            </header>
+            </header >
             {/* <Stack sx={{ width: '100%' }} spacing={2}>{
                             !errorMessage ?
                                 <Alert severity="error">{errorMessage}</Alert>
                                 : <Alert severity="success">Your MetaMask Connect Successfull</Alert>
                         }
                         </Stack> */}
-        </div>
+        </div >
     )
 }
 export default Navbar

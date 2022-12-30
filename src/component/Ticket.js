@@ -2,21 +2,29 @@ import { useState } from "react"
 import Image from "../screen/assets/vip.jpg"
 import Web3 from "web3"
 import { ABI } from "../config/abi"
-import { ethers } from "ethers"
+import { sendData } from "../config/firbeaseMethod"
 function Ticket() {
     let [event, setEvent] = useState()
     let [quantity, setQuantity] = useState()
-    async function Submit() {
-        // console.log(event,quantity)
-        if (window.ethereum) {
-            // event.preventDefault()
+    async function Submit(e) {
+        e.preventDefault()
+        if (!window.ethereum) {
+            alert('plzz connnect metamask')
+        }
+        else {
             const web3 = new Web3(window.ethereum)
-            // const signer = provider.getSigner();
-            let contract = new web3.eth.Contract(ABI, localStorage.getItem("UserAddress"))
-            let response = await contract.methods.buyTicket(event,quantity).call()
+            let address = localStorage.getItem("UserAddress")
+            let contract = new web3.eth.Contract(ABI, address)
+            let response = await contract.methods.buyTicket(event, quantity).send({ from: address})
             console.log(response)
-            // let response = await contract.methods.buyTicket(0, 10).call()
-            // console.log(response)
+            localStorage.setItem("buyTicket",JSON.stringify(response))
+            sendData(response, "Ticket")
+                .then((success) => {
+                    console.log(success);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     }
     return (
@@ -38,7 +46,7 @@ function Ticket() {
                             <label for="nukmber">quantity</label>
                             <br />
                             <input type="number" id="quantity" name="quantity" placeholder="Enter the quantity" onChange={(e) => setQuantity(e.target.value)} />
-                            <button className="w3-btn w3-red  w3-round" style={{ width: "50%", marginTop: "20px" }} onClick={() => Submit()}>Submit</button>
+                            <button className="w3-btn w3-red  w3-round" style={{ width: "50%", marginTop: "20px" }} onClick={(e) => Submit(e)}>Submit</button>
                         </div>
                     </form>
                 </div>
