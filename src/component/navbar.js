@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import WellectConnect from './welletConnect';
 function Navbar() {
     const [open, setOpen] = React.useState(false);
+    const [local, setLocal] = React.useState()
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let navigate = useNavigate()
@@ -14,15 +15,17 @@ function Navbar() {
             await window.ethereum.enable()
                 .then(res => {
                     console.log(res);
-
+                    setLocal(res[0])
                     localStorage.setItem("UserAddress", res[0])
                 })
         } else {
             console.log("install metamask");
         }
     }
-    let TansferTicket =  () => {
-        // navigate("/wellect")
+    React.useEffect(() => {
+        setLocal(localStorage.getItem("UserAddress"))
+    }, [])
+    let TansferTicket = () => {
         handleOpen()
     }
     return (
@@ -42,7 +45,7 @@ function Navbar() {
                         </div>
 
                         <div class="w3-col s3" backgroundColor="#F44336">
-                            {localStorage.getItem("UserAddress") ?
+                            {local ?
                                 <Button sx={{ backgroundColor: "#F44336", color: "white", borderRadius: "12px", padding: "9px" }} onClick={() => TansferTicket()}>Transfer </Button> :
                                 < Button sx={{ backgroundColor: "#F44336", color: "white", borderRadius: "12px", padding: "9px" }} onClick={() => meta()}>Connect MetaMask</Button>
                             }
